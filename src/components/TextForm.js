@@ -14,6 +14,12 @@ export default function TextForm(props) {
      setText(newText)
      props.showAlert("Text is Cleared!", "Success");
    }
+   const handleCopy=()=> {
+    
+    navigator.clipboard.writeText(text);
+    props.showAlert("Copy to Clipboard", "Success");
+  }
+
    const handleExtraSpaces=()=> {
     let newText = text.split(/[ ]+/);
      setText(newText.join(" "));
@@ -31,7 +37,7 @@ export default function TextForm(props) {
     setText(event.target.value);
     
   }
-  
+
   
   const [text, setText] = useState("");
   //setText("nrew text");
@@ -47,11 +53,12 @@ export default function TextForm(props) {
       <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleLowClick}>Convet To Lowercase </button>
       <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleClearClick}>Clear Text </button>
       <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleExtraSpaces}>Remove Extra Space </button>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleCopy}>Copy Text</button>
      
     </div>
     <div className="container my-3" style={{color:props.mode===`dark`?`white`:`#042743`}}>
       <h2>Your Text Summary</h2>
-      <p> {text.split(" ").filter((element)=>{return element.length!==0}).length} words and {text.length} characters</p>
+      <p> {text.split(/\s+/).filter((element)=>{return element.length!==0}).length} words and {text.length} characters</p>
       <p>{0.008* text.split(" ").filter((element)=>{return element.length!==0}).length} Minutes Read</p>
       <h2>Preview</h2>
       <p>{text.length>0?text:"Nothing to Preview "}</p>
